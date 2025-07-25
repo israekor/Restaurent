@@ -12,9 +12,14 @@ use Carbon\Carbon;
 class ReservationController extends Controller
 {
     // Liste toutes les réservations
-    public function index()
+    public function index(Request $request)
     {
-        $reservations = Reservation::with(['slot.table.salle', 'user'])->get();
+        $serveur = $request->user();
+
+        $reservations = Reservation::where('user_id', $serveur->id)
+            ->with(['slot.table.salle', 'user'])
+            ->orderBy('date', 'desc')
+            ->get();
         return response()->json($reservations);
     }
 

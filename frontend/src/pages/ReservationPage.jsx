@@ -14,6 +14,7 @@ const ReservationPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     secureGet('/reservations')
       .then((res) => {
         if (Array.isArray(res.data)) {
